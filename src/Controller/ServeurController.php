@@ -17,4 +17,23 @@ class ServeurController extends AbstractController
             'controller_name' => 'ServeurController',
         ]);
     }
+    /**
+     * @Route("/formulaire1", name="formulaire1")
+     */
+    public function formulaire(): Response
+    {
+        return $this->render('formulaire1/formulaire.html.twig', [
+            'controller_name' => 'formulaireController',
+        ]);
+    }
+	
+	/**
+     * @Route("/formulaire2", name="formulaire2")
+     */
+    public function utilisateur(): Response
+    {
+        return $this->render('formulaire2/utilisateur.html.twig', [
+            'controller_name' => 'utilisateurController',
+        ]);
+    }
 }
