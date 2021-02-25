@@ -17,8 +17,8 @@ class ServeurController extends AbstractController
             'controller_name' => 'ServeurController',
         ]);
     }
-	
-	/**
+
+    /**
      * @Route("/formulaire", name="formulaire")
      */
     public function formulaire(): Response
@@ -27,8 +27,8 @@ class ServeurController extends AbstractController
             'controller_name' => 'formulaireController',
         ]);
     }
-	
-	/**
+
+    /**
      * @Route("/utilisateur", name="utilisateur")
      */
     public function utilisateur(): Response
