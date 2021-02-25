@@ -1,20 +1,36 @@
-<div id="after_submit"></div>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Création utilisateur{% endblock %}</title>
+        {% block stylesheets %}<link href=" https://bootswatch.com/4/superhero/bootstrap.min.css " rel="stylesheet">{% endblock %}
+
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+	{% block body %}
+	<div id="after_submit"></div>
 <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
   <div class="row">
-    <label class="required" for="name">Your name:</label><br />
-    <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
-    <span id="name_validation" class="error_message"></span>
+        <label class="required" for="name">Your name:</label><br />
+        <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+        <span id="name_validation" class="error_message"></span>
   </div>
   <div class="row">
-    <label class="required" for="email">Your email:</label><br />
-    <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
-    <span id="email_validation" class="error_message"></span>
+        <label class="required" for="email">Your email:</label><br />
+        <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+        <span id="email_validation" class="error_message"></span>
   </div>
   <div class="row">
-    <label class="required" for="groupe">Your groupe:</label><br />
-    <textarea id="groupe" class="input" name="groupe" type="text" value="" size="30" /><br />
-    <span id="groupe_validation" class="error_message"></span>
+        <label class="required" for="groupe">Your groupe:</label><br />
+        <input id="groupe" class="input" name="groupe" type="text" value="" size="30" /><br />
+        <span id="groupe_validation" class="error_message"></span>
   </div>
     
-    <input id="submit_button" type="submit" value="Send email" />
+    <input id="submit_button" type="submit" value="Send " />
 	</form>
+	{% endblock %}
+	
+	</body>
+</html>
