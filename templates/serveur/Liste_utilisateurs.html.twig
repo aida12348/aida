@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,41 +49,18 @@
     </form> -->
   </div>
 </nav>
-
-<form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
-  <div class="row">
-        <label class="required" for="nom">ton nom:</label><br />
-        <input id="nom" class="input" name="nom" type="text" value="" size="30" /><br />
-        <span id="nom_validation" class="error_message"></span>
-  </div>
-   <div class="row">
-        <label class="required" for="prénom">ton prénom:</label><br />
-        <input id="prénom" class="input" name="prénom" type="text" value="" size="30" /><br />
-        <span id="prénom_validation" class="error_message"></span>
-  </div>
-   <div class="row">
-        <label class="required" for="téléphone">ton téléphone:</label><br />
-        <input id="téléphone" class="input" name="téléphone" type="text" value="" size="30" /><br />
-        <span id="téléphone_validation" class="error_message"></span>
-  </div>
-  <div class="row">
-        <label class="required" for="Adresse">ton Adresse:</label><br />
-        <input id="Adresse" class="input" name="Adresse" type="text" value="" size="30" /><br />
-        <span id="Adresse_validation" class="error_message"></span>
-  </div>
-  <div class="row">
-        <label class="required" for="Datedenaissance">ta Datedenaissance:</label><br />
-        <input id="Datedenaissance" class="input" name="Datedenaissance" type="text" value="" size="30" /><br />
-        <span id="Datedenaissance_validation" class="error_message"></span>
-  </div>
-    <div class="row">
-        <label class="required" for="formation"> ta formation:</label><br />
-        <input id="formation" class="input" name="formation" type="text" value="" size="30" /><br />
-        <span id="formation_validation" class="error_message"></span>
-  </div>
-    <input id="submit_button" type="submit" value="Send " />
-	</form>
-	    {% endblock %}
+	{% for item in utilisateurs%}
+<tr>
+<td> {{ item.id }} </td>
+<td> {{ item.utilisateur.nom }}  </td>
+<td> {{ item.utilisateur.prénom }}  </td>
+<td> {{ item.utilisateur.téléphone }}  </td>
+<td> {{ item.utilisateur.Adresse}}  </td>
+<td> {{ item.utilisateur.Datedenaissance}}  </td>
+<td> {{ item.utilisateur.formation }}  </td>
+</tr>
+{% endfor %}
+{% endblock %}
 	
 	</body>
 </html>

@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Utilisateur;
 
 class ServeurController extends AbstractController
 {
@@ -23,34 +26,54 @@ class ServeurController extends AbstractController
     public function createlogin(Request $request,EntityManagerInterface
 	$manager): Response
     { 
-	$login = new login();
 	$login=$request->request->get("name");
-	$login->setlogin($name);
-	$manager->persist($login);
-	$manager->flush();
+	$password=$request->request->get("password");
+	
+	if ($login=="admin")
+		$message="bienvenu admin";
+	else 
+		$message="vous etes simple utilisateur";
+
         return $this->render('login/index.html.twig', [
-            'name' => 'messsage',
+            'name' => $login,'message' => $message
         ]);
     }
 	
 
-    /**
-     * @Route("/formulaire", name="formulaire")
-     */
-    public function formulaire(): Response
-    { 
-        return $this->render('serveur/formulaire.html.twig', [
-            'controller_name' => 'formulaireController',
-        ]);
-    }
-
+   
     /**
      * @Route("/utilisateur", name="utilisateur")
      */
-    public function utilisateur(): Response
-    {
+    public function utilisateur(Request $request,EntityManagerInterface
+	$manager): Response
+	$monUtilisateur = new Utilisateur();
+	 $monUtilisateur -> setNom($nom);
+	 $monUtilisateur -> setPrénom($prénom);
+	 $monUtilisateur -> setTéléphone($téléphone);
+	 $monUtilisateur -> setAdresse($Adresse);
+	 $monUtilisateur -> setDatedenaissance($Datedenaissance);
+	 $monUtilisateur -> setFormation($formation);
+	
+	 $manager -> persist($monUtilisateur);
+
+    $manager -> flush ();
+	return $this->redirectToRoute ('utilisateur');
+	
+    /*{
+		
         return $this->render('serveur/utilisateur.html.twig', [
             'controller_name' => 'utilisateurController',
+        ]);
+    }*/
+	
+	/**
+     * @Route("/ListeUtilisateurs", name="Liste_Utilisateurs")
+     */
+    public function index(EntityManagerInterface
+	$manager): Response
+	$mesUtilisateurs=$manager->getRepository(Utilisateur::class)->findAll();
+    {
+        return $this->render('serveur/liste_utilisateurs.html.twig',['utilisateurs' => $mesUtilisateurs]);
         ]);
     }
 	
