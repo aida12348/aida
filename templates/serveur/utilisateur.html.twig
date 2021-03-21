@@ -82,6 +82,11 @@
         <input id="formation" class="input" name="formation" type="text" value="" size="30" /><br />
         <span id="formation_validation" class="error_message"></span>
   </div>
+  {% for un_utilisateur in lst_utilisateurs %}
+
+On utilise {{ un_utilisateur.Nom }} pour afficher le champ Nom de un_utilisateur, …
+
+{% end for %}
     <input id="submit_button" type="submit" value="Send " />
 	</form>
 	    {% endblock %}

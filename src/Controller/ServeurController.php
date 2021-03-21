@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Utilisateur;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 class ServeurController extends AbstractController
 {
     /**
@@ -46,7 +48,16 @@ class ServeurController extends AbstractController
      */
     public function utilisateur(Request $request,EntityManagerInterface
 	$manager): Response
-	$monUtilisateur = new Utilisateur();
+	{ 
+	$nom=$request->request->get("nom");
+	$prénom=$request->request->get("prénom");
+	$téléphone=$request->request->get("téléphone");
+	$Adresse=$request->request->get("Adresse");
+	$Datedenaissance=$request->request->get("Datedenaissance");
+	$formation=$request->request->get("formation");
+	
+	
+	 $monUtilisateur = new Utilisateur();
 	 $monUtilisateur -> setNom($nom);
 	 $monUtilisateur -> setPrénom($prénom);
 	 $monUtilisateur -> setTéléphone($téléphone);
@@ -58,6 +69,7 @@ class ServeurController extends AbstractController
 
     $manager -> flush ();
 	return $this->redirectToRoute ('utilisateur');
+	}
 	
     /*{
 		
@@ -67,15 +79,62 @@ class ServeurController extends AbstractController
     }*/
 	
 	/**
-     * @Route("/ListeUtilisateurs", name="Liste_Utilisateurs")
+     * @Route("/Listeu", name="Liste_u")
      */
-    public function index(EntityManagerInterface
+    public function Liste_u(EntityManagerInterface
 	$manager): Response
+	{
 	$mesUtilisateurs=$manager->getRepository(Utilisateur::class)->findAll();
-    {
+    
         return $this->render('serveur/liste_utilisateurs.html.twig',['utilisateurs' => $mesUtilisateurs]);
-        ]);
+        
     }
 	
+	 /**
+     * @Route("/session", name="create_session")
+     */
+    public function createsession(Request $request,EntityManagerInterface
+	$manager, SessionInterface $session): Response
+    { 
 	
+	$nom=$request->request->get("nom");
+	$prénom=$request->request->get("prénom");
+	$téléphone=$request->request->get("téléphone");
+	$Adresse=$request->request->get("Adresse");
+	$Datedenaissance=$request->request->get("Datedenaissance");
+	$formation=$request->request->get("formation");
+	
+	
+	
+	$utilisateur = $manager -> getRepository(Utilisateur::class)->findOneByPrenomNom($prénom,$nom);
+	// verifier le mot de passe 
+	
+	if ($utilisateur == null){
+		return new reponse("utilisateur".$prénom."".$nom." Inconnu");
+		$session -> set('userId',-1);
+	}
+	else 
+	if (password_verify($motdepasse,$utilisateur->getCode())== false) {
+		$session -> set('userId',-1);
+		return new reponse ("Mot de passe incorrect");
+	}
+	else {
+		$session -> set('userId',$utilisateur->getId());
+		return $this ->redirectToRoute ('serveur');
+
+	
+    }}
+	
+	
+	 /**
+     * @Route("/deconnexion", name="deconnexion")
+     */
+    public function session(Request $request,EntityManagerInterface
+	$manager, SessionInterface $session): Response
+    
+    {
+        $session -> clear ();
+		return $this ->redirectToRoute ('serveur');
+
+    }
 }
