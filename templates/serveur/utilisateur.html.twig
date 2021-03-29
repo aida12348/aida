@@ -5,57 +5,14 @@
         <meta charset="UTF-8">
         <title>{% block title %}Création utilisateur{% endblock %}</title>
         {% block stylesheets %}<link href=" https://bootswatch.com/4/superhero/bootstrap.min.css " rel="stylesheet">{% endblock %}
-
-        {% block javascripts %}{% endblock %}
     </head>
     <body>
-	{% block body %}
 	<div id="after_submit"></div>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarColor02">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </li>
-    </ul>
-<!--    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
-  </div>
-</nav>
-
-<form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+<form id="contact_form" action="/createUtilisateur" method="POST" enctype="multipart/form-data">
   <div class="row">
-        <label class="required" for="nom">ton nom:</label><br />
-        <input id="nom" class="input" name="nom" type="text" value="" size="30" /><br />
-        <span id="nom_validation" class="error_message"></span>
+        <label class="required" for="Nom">ton nom:</label><br />
+        <input id="Nom" class="input" name="Nom" type="text" value="" size="30" /><br />
+        <span id="Nom_validation" class="error_message"></span>
   </div>
    <div class="row">
         <label class="required" for="prénom">ton prénom:</label><br />
@@ -63,33 +20,11 @@
         <span id="prénom_validation" class="error_message"></span>
   </div>
    <div class="row">
-        <label class="required" for="téléphone">ton téléphone:</label><br />
-        <input id="téléphone" class="input" name="téléphone" type="text" value="" size="30" /><br />
-        <span id="téléphone_validation" class="error_message"></span>
+        <label class="required" for="motdepasse">ta motdepasse:</label><br />
+        <input id="motdepasse" class="input" name="motdepasse" type="text" value="" size="30" /><br />
+        <span id="motdepasse_validation" class="error_message"></span>
   </div>
-  <div class="row">
-        <label class="required" for="Adresse">ton Adresse:</label><br />
-        <input id="Adresse" class="input" name="Adresse" type="text" value="" size="30" /><br />
-        <span id="Adresse_validation" class="error_message"></span>
-  </div>
-  <div class="row">
-        <label class="required" for="Datedenaissance">ta Datedenaissance:</label><br />
-        <input id="Datedenaissance" class="input" name="Datedenaissance" type="text" value="" size="30" /><br />
-        <span id="Datedenaissance_validation" class="error_message"></span>
-  </div>
-    <div class="row">
-        <label class="required" for="formation"> ta formation:</label><br />
-        <input id="formation" class="input" name="formation" type="text" value="" size="30" /><br />
-        <span id="formation_validation" class="error_message"></span>
-  </div>
-  {% for un_utilisateur in lst_utilisateurs %}
-
-On utilise {{ un_utilisateur.Nom }} pour afficher le champ Nom de un_utilisateur, …
-
-{% end for %}
     <input id="submit_button" type="submit" value="Send " />
 	</form>
-	    {% endblock %}
-	
 	</body>
 </html>

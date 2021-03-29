@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Edition de fichier !{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+ {% block stylesheets %}<link href=" https://bootswatch.com/4/superhero/bootstrap.min.css " rel="stylesheet">{% endblock %}
+
+<div class="example-wrapper">
+  
+    <h1>Ajout de fichiers</h1>
+	</br>
+	
+	<div id="after_submit"></div>
+
+<form id="contact_form" action="/login" method="POST" enctype="multipart/form-data">
+
+  <div class="row">
+        <label class="required" for="name">Your name:</label><br />
+        <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+        <span id="name_validation" class="error_message"></span> 
+  </div>
+  <div class="row">
+       <label class="required" for="email">Your email:</label><br />
+       <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+       <span id="email_validation" class="error_message"></span>
+  </div>
+  <div class="row">
+        <label class="required" for="password">Your password:</label><br />
+        <input id="password" class="input" name="password" type="text" value="" size="30" /><br />
+        <span id="password_validation" class="error_message"></span> 
+  </div>
+    <input id="submit_button" type="submit" value="Send " />
+</form>
+	
+
+</div>
+{% endblock %}
