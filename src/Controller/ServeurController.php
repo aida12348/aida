@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ServeurController extends AbstractController
 {
+	//creation de formulaire
     /**
      * @Route("/serveur", name="serveur")
      */
@@ -40,9 +41,11 @@ class ServeurController extends AbstractController
         return $this->render('login/index.html.twig', [
             'name' => $login,'message' => $message
         ]);
+		
+		
     }
 	
-
+    //creation d'utilisateur
    /**
      * @Route("/utilisateur", name="utilisateur")
      */
@@ -52,6 +55,7 @@ class ServeurController extends AbstractController
             'controller_name' => 'UtilisateurController',
         ]);
     }
+	// mise a jour de la base de donnée
     /**
      * @Route("/createUtilisateur", name="create_Utilisateur")
      */
@@ -63,16 +67,12 @@ class ServeurController extends AbstractController
 	 $Nom=$request->request->get("Nom");
 	$Prénom=$request->request->get("prénom");
 	$motdepasse=$request->request->get("motdepasse");
-	/*$Adresse=$request->request->get("Adresse");
-	$Datedenaissance=$request->request->get("Datedenaissance");
-	$formation=$request->request->get("formation");*/
+	
 	 $utilisateur -> setNom($Nom);
 	 $utilisateur -> setPrénom($Prénom);
 	 $utilisateur -> setEmail($Prénom);
 	 $utilisateur -> setmotdepasse($motdepasse);
-	 /*$utilisateur -> setAdresse($Adresse);
-     $utilisateur -> setdaDatedenaissance($Datedenaissance);
-	 $utilisateur -> setformation($formation);*/
+	 
 
 	 $manager -> persist($utilisateur);
     $manager -> flush ();
@@ -101,72 +101,33 @@ class ServeurController extends AbstractController
 	$manager, SessionInterface $session): Response
     { 
 	
-	$nom=$request->request->get("nom");
-	$prénom=$request->request->get("prénom");
-	$téléphone=$request->request->get("téléphone");
-	$Adresse=$request->request->get("Adresse");
-	$Datedenaissance=$request->request->get("Datedenaissance");
-	$formation=$request->request->get("formation");
+	$nom=$request->request->get("Nom");
+	$prénom=$request->request->get("Prénom");
+	$motdepasse=$request->request->get("motdepasse");
+	$Email=$request->request->get("Email");
 	
-	
-	}
-	/**
-     * @Route("/connexion", name="connexion")
-     */
-	 
-   /* public function connexion(Request $request, EntityManagerInterface $manager)
-    {
-		
-		$name = $request->request->get("name");
-		$password = $request->request->get("password");
-		
-		//on selectionne dans la base de données
-		
-		$aUser = $manager -> getRepository(Utilisateur::class)->findBy(["name"=>$name,"password"=>$password]);
-		
-		//on teste le résultat
-		
-		if(sizeof($aUser)==1) {
-			
-			$utilisateur = new Utilisateur();
-			$utilisateur = $aUser[0];
-			
-			//on demarre la session
-			
-			$session = $request->getSession();
-			
-			//on met à jour les variables de session
-			
-			$session -> set("idUtilisateur",$utilisateur -> getID());
-			$session -> set("nameUtilisateur",$utilisateur -> getname());
-			$session -> set("passwordUtilisateur",$utilisateur -> getpassword());
-			$session -> set("EmailUtilisateur",$utilisateur -> getEmail());
-			
-			return $this->redirectToRoute('serveur');
-			return $this->render('serveur/login.html.twig');
-		}*/
-			
-			
-			
-	/*$utilisateur = $manager -> getRepository(utilisateur::class)->findOneByPrenomNom($prénom,$nom);
+	$utilisateur = $manager -> getRepository(Utilisateur::class)->findOneByPrénomNom($Prénom,$Nom);
 	// verifier le mot de passe 
 	
 	if ($utilisateur == null){
-		return new reponse("utilisateur".$prénom."".$nom." Inconnu");
-		$session -> set('Nom,prénom',-1);
+		return new reponse("utilisateur".$Prénom."".$Nom." Inconnu");
+		$session -> set('Nom,Prénom',-1);
 	}
 	else 
-	if (password_verify($password,$utilisateur->getCode())== false) {
+	if (password_verify($password,$utilisateur->getpassword())== false) {
 		$session -> set('password',-1);
-		return new reponse ("Mot de passe incorrect");
+		return new reponse ("Mot de passe invalide");
 	}
 	else {
-		$session -> set('userId',$utilisateur->getId());
+		$session -> set('id',$utilisateur->getId());
 		return $this ->redirectToRoute ('serveur');
 
 	
-    }}*/
+    }
+	}
 	
+			
+	 //se deconnecter
 	
 	 /**
      * @Route("/deconnexion", name="deconnexion")
@@ -177,27 +138,38 @@ class ServeurController extends AbstractController
     {
 		$session=$request -> getsession();
         $session -> clear ();
-		return $this ->redirectToRoute ('serveur');
-
+		$session->remove("idUtilisateur");
+		$session->invalidate();
+		$session=$request->getSession()->clear();
+		return $this->redirectToRoute('serveur');
     }
+	// Ajout de fichier
 	/**
      * @Route("/AjouterFichier", name="Ajouter_Fichier")
      */
-   /* public function AjouterFichier(EntityManagerInterface
-	$manager, SessionInterface $session): Response
-    { 
+     
+    public function AjouterFichier(Request $request, EntityManagerInterface $manager): Response
+    {
+        
+        return $this->render('serveur/fichier.html.twig', [
+        'controller_name' => "fichier controller",
+        
+        'listeUtilisateurs' => $manager->getRepository(Utilisateur::class)->findAll(),
+       
+        ]);
+    }
 	
-	if ($utilisateur) {
-		
-	$AjouterFichier=$manager->getRepository(Utilisateur::class)->findAll();
+	// creation liste utilisateur 
+	/**
+     * @Route("/ListeFichier", name="Liste_Fichier")
+     */
+    public function ListeFichier(Request $request,EntityManagerInterface
+	$manager): Response
+	{
+	$ListeFichier=$manager->getRepository(document::class)->findAll();
 	
     
-        return $this->render('serveur/fichier.html.twig',['utilisateur' => $utilisateur]);
-	
-	}
-	else
-		 return new response("cette page est réservée aux utilisateurs.");
-
-
-	}*/
+        return $this->render('serveur/Liste_Fichier.html.twig',['ListeFichier' => $ListeFichier]);
+        
+    }
 }
